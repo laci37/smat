@@ -1,7 +1,7 @@
-name := "sblas"
+name := "smat"
 
 version := "0.1"
 
 scalaVersion := "2.10.1"
 
-scalacOption += "-deprecation"
+scalacOptions += "-deprecation"
