@@ -6,6 +6,10 @@ import cern.colt.matrix.DoubleFactory2D
 import cern.colt.matrix.linalg.Algebra
 import cern.jet.math.Functions
 
+/** Wrapper for cern.colt.matrix.DoubleMatrix2D
+ *
+ *  This class is the default implementation for DMatrix
+ */ 
 class DoubleMatrix(val under:DoubleMatrix2D, transpose:Boolean = false) extends DMatrix{
 
   def rows=if(transpose) under.columns else under.rows
@@ -49,6 +53,9 @@ class DoubleMatrix(val under:DoubleMatrix2D, transpose:Boolean = false) extends 
   def t:DMatrix= new DoubleMatrix(under,!transpose)
 } 
 
+/** Factory for DoubleMatrix
+ *
+ */ 
 object DoubleMatrix extends MatrixFactory[Double]{
   
   val factory = DoubleFactory2D.dense
@@ -65,6 +72,9 @@ object DoubleMatrix extends MatrixFactory[Double]{
     new DoubleMatrix(make(arr))
   }
 
+  /** creates a DoubleMatrix from any DMatrix
+   *
+   */ 
   def fromGeneral(that: DMatrix):DoubleMatrix = that match {
     case a:DoubleMatrix => a
     case _ => {
