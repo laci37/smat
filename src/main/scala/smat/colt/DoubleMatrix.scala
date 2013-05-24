@@ -51,7 +51,7 @@ class DoubleMatrix(val under:DoubleMatrix2D, transpose:Boolean) extends DMatrix{
     new DoubleMatrix(under.copy().assign(Functions.mult(that)))
   }
 
-  override def t():DMatrix= new DoubleMatrix(under,!transpose)
+  def t:DMatrix= new DoubleMatrix(under,!transpose)
 } 
 
 object Linalg extends Algebra
