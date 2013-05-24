@@ -12,7 +12,7 @@ object Ring{
     def add(a:Double,b:Double)= a+b
     def mul(a:Double,b:Double)= a*b
     def negate(a:Double)= -a
-    def sub(a:Double, b:Double)= a-b
+    override def sub(a:Double, b:Double)= a-b
     val zero= 0d
     val one= 1d
   }
