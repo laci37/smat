@@ -13,40 +13,36 @@ class DoubleMatrix(val under:DoubleMatrix2D, transpose:Boolean = false) extends 
   
   def apply(r:Int,c:Int)=under.get(r,c)
 
-  def +(that:DMatrix):DMatrix={
-    that match {
-      case m:DoubleMatrix=>{
-	new DoubleMatrix(under.copy().assign(m.under,Functions.plus))
-      }
-      case _ =>{
-	super.+(that)
-      }
+  def +(that:DMatrix):DMatrix = that match {
+    case m:DoubleMatrix=>{
+      new DoubleMatrix(under.copy().assign(m.under,Functions.plus))
+    }
+    case _ =>{
+      DoubleMatrix.fromGeneral(super.+(that))
     }
   }
 
-  def -(that:DMatrix):DMatrix={
-    that match {
-      case m:DoubleMatrix=>{
-	new DoubleMatrix(under.copy().assign(m.under,Functions.minus))
-      }
-      case _ =>{
-	super.-(that)
-      }
+  def -(that:DMatrix):DMatrix = that match {
+    case m:DoubleMatrix=>{
+      new DoubleMatrix(under.copy().assign(m.under,Functions.minus))
+    }
+    case _ =>{
+      DoubleMatrix.fromGeneral(super.-(that))
     }
   }
+  
 
-  def *(that:DMatrix):DMatrix={
-    that match {
-      case m:DoubleMatrix=>{
-	new DoubleMatrix(Linalg.mult(this.under,m.under))
-      }
-      case _ =>{
-	super.*(that)
-      }
+  def *(that:DMatrix):DMatrix = that match {
+    case m:DoubleMatrix=>{
+      new DoubleMatrix(Linalg.mult(this.under,m.under))
+    }
+    case _ =>{
+      DoubleMatrix.fromGeneral(super.*(that))
     }
   }
+  
 
-  def *(that:Double):DMatrix={
+  def *(that:Double):DMatrix = {
     new DoubleMatrix(under.copy().assign(Functions.mult(that)))
   }
 
