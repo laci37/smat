@@ -2,12 +2,11 @@ package smat.colt
 
 import smat._
 import cern.colt.matrix.DoubleMatrix2D
+import cern.colt.matrix.DoubleFactory2D
 import cern.colt.matrix.linalg.Algebra
 import cern.jet.math.Functions
 
-class DoubleMatrix(val under:DoubleMatrix2D, transpose:Boolean) extends DMatrix{
-
-  def this(under:DoubleMatrix2D)= this(under,false)
+class DoubleMatrix(val under:DoubleMatrix2D, transpose:Boolean = false) extends DMatrix{
 
   def rows=if(transpose) under.columns else under.rows
   def cols=if(transpose) under.rows else under.columns
@@ -53,5 +52,29 @@ class DoubleMatrix(val under:DoubleMatrix2D, transpose:Boolean) extends DMatrix{
 
   def t:DMatrix= new DoubleMatrix(under,!transpose)
 } 
+
+object DoubleMatrix extends MatrixFactory[Double]{
+  
+  val factory = DoubleFactory2D.dense
+  import factory._
+  
+  def zeros(r: Int, c: Int) = new DoubleMatrix(make(r,c))
+  
+  def fill(r: Int, c: Int, value: => Double) = new DoubleMatrix(make(r,c,value))
+  
+  def eye(d: Int) = new DoubleMatrix(identity(d))
+  
+  def tabulate(r: Int, c: Int)(f: (Int,Int) => Double) = {
+    val arr = Array.tabulate(r,c){ (x,y) => f(x,y) }
+    new DoubleMatrix(make(arr))
+  }
+
+  def fromGeneral(that: DMatrix):DoubleMatrix = that match {
+    case a:DoubleMatrix => a
+    case _ => {
+      tabulate(that.rows,that.cols)(that.apply)
+    }
+  }
+}
 
 object Linalg extends Algebra
