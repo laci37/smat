@@ -2,7 +2,6 @@ package smat
 
 import smat.math._
 
-
 /**
  * 2D martix dependency injection trait
  * defines matrix interface and provides fallback ops 
@@ -44,7 +43,14 @@ trait Matrix[A] {
   def *(that: A)(implicit s:Semiring[A]):Matrix[A]={
     new LazyMatrix[A](rows,cols,(r,c)=>s.mul(this(r,c),that))
   }
+
+  def t():Matrix[A]={    
+    new LazyMatrix[A](rows,cols,(r,c)=>this(c,r))
+  }
 }
 
 class MatrixSizeException extends Exception
 
+object Matrix{
+  
+}
