@@ -6,3 +6,7 @@ trait Semiring[A]{
   def zero:A
   def one:A
 }
+
+object Semiring{
+  implicit val doubleSemiring=Ring.doubleRing
+}
