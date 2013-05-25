@@ -6,7 +6,7 @@ import smat.math._
  * 
  * defines matrix interface and provides fallback ops 
  */
-trait Matrix[A] { 
+trait Matrix[A]{ 
   /**returns the element in the specified row and column
    *
    */ 
@@ -72,7 +72,26 @@ trait Matrix[A] {
   def t(implicit tag:ClassTag[A]):Matrix[A]={    
     new LazyMatrix[A](rows,cols,(r,c)=>this(c,r))
   }
+
+  //traversable methods
+  
+  def foreach(f: A => Unit) { 
+    var c=0
+    var r=0
+    while(r<rows){ 
+      while(c<cols){ 
+	f(apply(r,c))
+	c+=1
+      }
+      r+=1
+    }
+  }
+
+  def map[B:ClassTag](f: A => B):Matrix[B] = { 
+    new LazyMatrix[B](rows,cols,{ (r,c) => f(this.apply(r,c)) })
+  }
 }
+
 
 class MatrixSizeException extends Exception
 
