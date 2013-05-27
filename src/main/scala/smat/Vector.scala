@@ -1,7 +1,7 @@
 package smat
 
 trait Vector[A] extends Matrix[A]{
-  
+  /**true if this is a row vecor*/
   def isRow:Boolean
   
   def length:Int
@@ -18,5 +18,7 @@ trait Vector[A] extends Matrix[A]{
       f(apply(i))
       i+=1
     }
-  } 
+  }
+
+  def t:Vector[A]
 }
