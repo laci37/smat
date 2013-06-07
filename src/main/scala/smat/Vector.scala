@@ -1,4 +1,5 @@
 package smat
+import scala.reflect.ClassTag
 
 trait Vector[A] extends Matrix[A]{
   /**true if this is a row vecor*/
@@ -20,5 +21,7 @@ trait Vector[A] extends Matrix[A]{
     }
   }
 
-  def t:Vector[A]
+  override def t(implicit tag:ClassTag[A]):Vector[A]={
+    new LazyVector[A](length,this.apply,!isRow)
+  }
 }
